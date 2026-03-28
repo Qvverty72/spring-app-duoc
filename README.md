@@ -18,3 +18,6 @@ Todas las ramas deben crearse a partir de `develop` (excepto los hotfixes) y seg
 1. **Desarrollo:** Todo el trabajo se realiza en ramas `feature/*` o `hotfix/*`. Nunca se hace commit directo a `main` o `develop`.
 2. **Pull Requests (PR):** Para integrar código, se debe abrir un PR hacia `develop` (o hacia `main` si es un hotfix).
 3. **Revisión:** Todo PR debe ser revisado y aprobado por al menos 1 desarrollador distinto al autor antes de ser fusionado.
+
+
+> ⚠️ **Aviso de Versión:** Este proyecto se encuentra actualmente en la versión estable v1.0.1.
