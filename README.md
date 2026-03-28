@@ -1,85 +1,23 @@
-# Spring Boot Greetings API
+# Ingeniería Devops
 
-Sample Spring Boot application for the **Duoc DevOps** class. Students can use this project to learn about building, running, and deploying a Java REST API.
+## 🌳 Estrategia de Ramas: GitFlow
+Para este proyecto hemos decidido implementar **GitFlow** como nuestra estrategia de ramificación. 
 
-## Prerequisites
+**Justificación:**
+Elegi GitFlow porque nos proporciona una estructura robusta y predecible, ideal para el trabajo colaborativo. Separa claramente el código en producción (`main`) del código en desarrollo (`develop`). Además, el uso de ramas efímeras (`feature`, `hotfix`) nos permite trabajar en nuevas funcionalidades y resolver errores críticos en producción de manera aislada sin interferir en el trabajo de otros desarrolladores.
 
-- **Java 21** — Download the Microsoft Build of OpenJDK 21 from:
-  https://learn.microsoft.com/en-us/java/openjdk/download
-- **Apache Maven 3.8+**
+## 📝 Convenciones del Proyecto
 
-### Installing Maven on Windows (using Chocolatey)
+### Naming de Ramas (Branch Naming)
+Todas las ramas deben crearse a partir de `develop` (excepto los hotfixes) y seguir esta convención de nombres en minúsculas y separados por guiones:
+* `feature/nombre-de-la-funcionalidad`: Para nuevos desarrollos.
+* `hotfix/nombre-del-error`: Para errores críticos en producción (salen de `main` y se fusionan en `main` y `develop`).
 
-1. Install Chocolatey from an **admin PowerShell** terminal:
 
-```powershell
-Set-ExecutionPolicy Bypass -Scope Process -Force
-[System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
-iex ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
-```
+### Flujos de Merge y Estrategia de Revisión
+1. **Desarrollo:** Todo el trabajo se realiza en ramas `feature/*` o `hotfix/*`. Nunca se hace commit directo a `main` o `develop`.
+2. **Pull Requests (PR):** Para integrar código, se debe abrir un PR hacia `develop` (o hacia `main` si es un hotfix).
+3. **Revisión:** Todo PR debe ser revisado y aprobado por al menos 1 desarrollador distinto al autor antes de ser fusionado.
 
-2. Install Maven from an **admin PowerShell** terminal:
 
-```powershell
-choco install maven --force
-```
-
-> **Important:** After installing Maven, restart your terminal or VS Code editor for the changes to take effect.
-
-### Verify your installation
-
-```bash
-java -version
-mvn -version
-```
-
-## Build & Run
-
-### Compile the project
-
-```bash
-mvn clean compile
-```
-
-### Run tests
-
-```bash
-mvn test
-```
-
-### Package into a JAR
-
-```bash
-mvn clean package
-```
-
-### Run the application
-
-Using Maven:
-
-```bash
-mvn spring-boot:run
-```
-
-Or with the JAR directly:
-
-```bash
-java -jar target/spring-app-duoc-0.0.1-SNAPSHOT.jar
-```
-
-The application starts on **port 8080**.
-
-## Endpoints
-
-| Method | URL | Description |
-|--------|-----|-------------|
-| GET | `/` | Welcome page with links to the API documentation |
-| GET | `/greetings` | Returns `Hello world` |
-| GET | `/greetings?message=YourName` | Returns `Hello YourName` |
-
-## API Documentation
-
-Once the application is running:
-
-- **Swagger UI:** http://localhost:8080/swagger-ui.html
-- **OpenAPI spec (JSON):** http://localhost:8080/api-docs
+> ⚠️ **Aviso de Versión:** Este proyecto se encuentra actualmente en la versión estable v1.0.1.
