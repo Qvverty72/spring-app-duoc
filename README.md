@@ -1,23 +1,54 @@
-# Ingeniería Devops
+# Spring Boot App - Pipeline CI/CD & Contenedores
 
-## 🌳 Estrategia de Ramas: GitFlow
-Para este proyecto hemos decidido implementar **GitFlow** como nuestra estrategia de ramificación. 
+Este proyecto consiste en un microservicio desarrollado en Java con Spring Boot, diseñado para demostrar la implementación de un ciclo de vida de desarrollo moderno utilizando Docker, GitHub Actions y prácticas de DevSecOps.
 
-**Justificación:**
-Elegi GitFlow porque nos proporciona una estructura robusta y predecible, ideal para el trabajo colaborativo. Separa claramente el código en producción (`main`) del código en desarrollo (`develop`). Además, el uso de ramas efímeras (`feature`, `hotfix`) nos permite trabajar en nuevas funcionalidades y resolver errores críticos en producción de manera aislada sin interferir en el trabajo de otros desarrolladores.
+## 🚀 Tecnologías Utilizadas
+* **Lenguaje:** Java 21
+* **Framework:** Spring Boot
+* **Contenedores:** Docker & Docker Compose
+* **CI/CD:** GitHub Actions
+* **Seguridad:** Snyk (Escaneo de dependencias)
+* **Pruebas:** JUnit 5
 
-## 📝 Convenciones del Proyecto
+---
 
-### Naming de Ramas (Branch Naming)
-Todas las ramas deben crearse a partir de `develop` (excepto los hotfixes) y seguir esta convención de nombres en minúsculas y separados por guiones:
-* `feature/nombre-de-la-funcionalidad`: Para nuevos desarrollos.
-* `hotfix/nombre-del-error`: Para errores críticos en producción (salen de `main` y se fusionan en `main` y `develop`).
+## 🛠️ 1. Contenerización (IE1)
+
+El microservicio ha sido contenerizado utilizando un **Dockerfile** optimizado de múltiples etapas (*multi-stage build*). Esto garantiza una imagen ligera para producción, separando el entorno de compilación del de ejecución.
+
+**Características del Dockerfile:**
+- **Build Stage:** Utiliza Maven y JDK 21 para compilar el código.
+- **Run Stage:** Utiliza JRE 21 para ejecutar el artefacto `.jar`.
+
+---
+
+## ⛓️ 2. Pipeline de CI/CD (IE1, IE2, IE3, IE4)
+
+Se implementó un flujo de trabajo automatizado en **GitHub Actions** (`.github/workflows/main.yml`) que se activa en cada `push` a la rama principal.
+
+### Etapas del Pipeline:
+1. **Pruebas Unitarias (IE2):** Ejecución de tests automatizados con JUnit mediante el comando `mvn test`. Si un test falla, el pipeline se detiene inmediatamente.
+2. **Escaneo de Seguridad (IE3):** Integración con **Snyk** para detectar vulnerabilidades en dependencias y malas prácticas en el código.
+3. **Build de Imagen (IE1):** Construcción automática de la imagen Docker etiquetada con el hash del commit para garantizar la trazabilidad.
+4. **Despliegue Simulado (IE4):** Orquestación mediante **Docker Compose** en el runner de GitHub para validar que el microservicio y sus dependencias levantan correctamente.
+
+---
+
+## 🛡️ 3. Seguridad y Calidad (IE3)
+
+Para garantizar la calidad y seguridad del software, el pipeline incluye:
+- **Bloqueo por Fallo:** El pipeline está configurado para fallar si los tests unitarios no pasan.
+- **Alertas de Snyk:** El análisis de seguridad genera reportes (SARIF/JSON) que se suben como artefactos. Se ha configurado el pipeline para alertar sobre vulnerabilidades críticas.
+- **Trazabilidad:** Cada imagen construida está vinculada a un commit específico de GitHub, permitiendo saber exactamente qué código está corriendo en cada contenedor.
+
+---
+
+## 🏗️ 4. Orquestación (IE5)
+
+La estrategia de orquestación se basa en **Docker Compose**, lo que permite definir y correr aplicaciones multi-contenedor.
+
+Para levantar el entorno localmente, ejecute:
+```bash
+docker-compose up -d
 
 
-### Flujos de Merge y Estrategia de Revisión
-1. **Desarrollo:** Todo el trabajo se realiza en ramas `feature/*` o `hotfix/*`. Nunca se hace commit directo a `main` o `develop`.
-2. **Pull Requests (PR):** Para integrar código, se debe abrir un PR hacia `develop` (o hacia `main` si es un hotfix).
-3. **Revisión:** Todo PR debe ser revisado y aprobado por al menos 1 desarrollador distinto al autor antes de ser fusionado.
-
-
-> ⚠️ **Aviso de Versión:** Este proyecto se encuentra actualmente en la versión estable v1.0.1.

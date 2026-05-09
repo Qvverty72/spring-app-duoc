@@ -1,0 +1,8 @@
+version: '3.8'
+
+services:
+  app:
+    image: spring-app-duoc:latest
+    container_name: spring-app-duoc
+    ports:
+      - "8080:8080"
