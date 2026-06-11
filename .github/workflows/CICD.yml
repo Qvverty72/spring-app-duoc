@@ -40,7 +40,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         # Si SonarCloud detecta fallas críticas, este paso falla y el pipeline se detiene aquí.
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=TU_PROJECT_KEY_AQUI
+        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=qvverty72_spring-app-duoc -Dsonar.organization=qvverty72
 
   # JOB 2: CONSTRUCCIÓN DE IMAGEN Y SUBIDA A DOCKER HUB
   docker-publish:
